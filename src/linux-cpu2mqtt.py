@@ -104,15 +104,15 @@ def config_json(what_config):
 
     data["state_topic"] = config.mqtt_topic_prefix + "/" + hostname + "/" + what_config
     data["unique_id"] = hostname + "_" + what_config
-    if what_config == "cpuusage":
+    if what_config == "cpu_usage":
         data["icon"] = "mdi:speedometer"
         data["name"] = hostname + " CPU Usage"
         data["unit_of_measurement"] = "%"
-    elif what_config == "cputemp":
+    elif what_config == "cpu_temp":
         data["icon"] = "hass:thermometer"
         data["name"] = hostname + " CPU Temperature"
         data["unit_of_measurement"] = "°C"
-    elif what_config == "diskusage":
+    elif what_config == "disk_usage":
         data["icon"] = "mdi:harddisk"
         data["name"] = hostname + " Disk Usage"
         data["unit_of_measurement"] = "%"
@@ -144,24 +144,24 @@ def publish_to_mqtt(cpu_usage=0, cpu_temp=0, disk_usage=0, swap_usage=0, memory_
     # publish monitored values to MQTT
     if config.cpu_usage:
         if config.discovery_messages:
-            client.publish("homeassistant/sensor/" + config.mqtt_topic_prefix + "/" + hostname + "_cpuusage/config",
-                           config_json('cpuusage'), qos=0)
+            client.publish("homeassistant/sensor/" + config.mqtt_topic_prefix + "/" + hostname + "_cpu_usage/config",
+                           config_json('cpu_usage'), qos=0)
             time.sleep(config.sleep_time)
-        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/cpuusage", cpu_usage, qos=1)
+        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/cpu_usage", cpu_usage, qos=1)
         time.sleep(config.sleep_time)
     if config.cpu_temp:
         if config.discovery_messages:
-            client.publish("homeassistant/sensor/" + config.mqtt_topic_prefix + "/" + hostname + "_cputemp/config",
-                           config_json('cputemp'), qos=0)
+            client.publish("homeassistant/sensor/" + config.mqtt_topic_prefix + "/" + hostname + "_cpu_temp/config",
+                           config_json('cpu_temp'), qos=0)
             time.sleep(config.sleep_time)
-        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/cputemp", cpu_temp, qos=1)
+        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/cpu_temp", cpu_temp, qos=1)
         time.sleep(config.sleep_time)
     if config.disk_usage:
         if config.discovery_messages:
-            client.publish("homeassistant/sensor/" + config.mqtt_topic_prefix + "/" + hostname + "_diskusage/config",
-                           config_json('diskusage'), qos=0)
+            client.publish("homeassistant/sensor/" + config.mqtt_topic_prefix + "/" + hostname + "_disk_usage/config",
+                           config_json('disk_usage'), qos=0)
             time.sleep(config.sleep_time)
-        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/diskusage", disk_usage, qos=1)
+        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/disk_usage", disk_usage, qos=1)
         time.sleep(config.sleep_time)
     if config.swap_usage:
         if config.discovery_messages:
