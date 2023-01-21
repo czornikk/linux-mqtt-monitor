@@ -108,10 +108,10 @@ set_cron(){
     print_yellow " If you want the cronjob to be automatically created remove the line below from your\n cronjobs list and run the installer again.\n\n"
     echo " ${cronfound}"
   else
-    printf "How often do you want the script to run in minutes? (default is 2): "
+    printf "How often do you want the script to run in minutes? (default is 1): "
     read MIN
     if [ -z "$MIN" ]; then
-      MIN=2
+      MIN=1
     fi
     echo "Adding the line below to your crontab"
     echo "*/${MIN} * * * * ${python} ${cwd}/src/linux-cpu2mqtt.py"
