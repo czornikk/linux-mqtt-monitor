@@ -14,10 +14,10 @@ main(){
   else
     sudo apt-get install git  
   fi
-
-  printm "Cloning rpi-mqtt-monitor git repository"
-  git clone https://github.com/hjelev/rpi-mqtt-monitor.git
-  cd rpi-mqtt-monitor
+  
+  printm "Cloning linux-mqtt-monitor git repository"
+  git clone https://github.com/czornikk/linux-mqtt-monitor.git
+  cd linux-mqtt-monitor
   bash install.sh
 }
 

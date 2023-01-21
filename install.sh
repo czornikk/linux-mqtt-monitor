@@ -1,6 +1,6 @@
 welcome(){
-  echo "  This script will install if not installed: python-pip and python module paho-mqtt,"
-  echo "  configure Raspberry Pi MQTT monitor and create a cronjob to run it."
+  echo "  This script will install if not installed: python-pip and python modules paho-mqtt and psutil,"
+  echo "  configure Linux MQTT monitor and create a cronjob to run it."
   read -r -p "  Do you want to proceed? [y/N] " response
   if [[ "$response" =~ ^([yY][eE][sS]|[yY])$ ]]; then
     printf ""
@@ -88,12 +88,12 @@ update_config(){
   fi
   sed -i "s/1883/${PORT}/" src/config.py
 
-  printf "Enter mqtt_topic_prefix (default is rpi-MQTT-monitor): "
+  printf "Enter mqtt_topic_prefix (default is linux-MQTT-monitor): "
   read TOPIC
   if [ -z "$TOPIC" ]; then
-    TOPIC=rpi-MQTT-monitor
+    TOPIC=linux-MQTT-monitor
   fi
-  sed -i "s/rpi-MQTT-monitor/${TOPIC}/" src/config.py
+  sed -i "s/linux-MQTT-monitor/${TOPIC}/" src/config.py
 
   print_green  "+ config.py is updated with provided settings"
 }
@@ -102,9 +102,9 @@ set_cron(){
   printm "Setting Cronjob"
   cwd=$(pwd)
   crontab -l > tempcron
-  if grep -q rpi-cpu2mqtt.py tempcron; then
-    cronfound=$(grep rpi-cpu2mqtt.py tempcron)
-    print_yellow " There is already a cronjob running rpi-cpu2mqtt.py - skipping cronjob creation.\n"
+  if grep -q linux-cpu2mqtt.py tempcron; then
+    cronfound=$(grep linux-cpu2mqtt.py tempcron)
+    print_yellow " There is already a cronjob running linux-cpu2mqtt.py - skipping cronjob creation.\n"
     print_yellow " If you want the cronjob to be automatically created remove the line below from your\n cronjobs list and run the installer again.\n\n"
     echo " ${cronfound}"
   else
@@ -114,15 +114,15 @@ set_cron(){
       MIN=2
     fi
     echo "Adding the line below to your crontab"
-    echo "*/${MIN} * * * * ${python} ${cwd}/src/rpi-cpu2mqtt.py"
-    echo "*/${MIN} * * * * ${python} ${cwd}/src/rpi-cpu2mqtt.py" >> tempcron
+    echo "*/${MIN} * * * * ${python} ${cwd}/src/linux-cpu2mqtt.py"
+    echo "*/${MIN} * * * * ${python} ${cwd}/src/linux-cpu2mqtt.py" >> tempcron
     crontab tempcron
   fi
   rm tempcron
 }
 
 main(){
-  printm "Raspberry Pi MQTT monitor installer"
+  printm "Linux MQTT monitor installer"
   welcome
   find_python
   check_and_install_pip

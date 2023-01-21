@@ -5,7 +5,7 @@ mqtt_host = "ip address or host"
 mqtt_user = "username"
 mqtt_password = "password"
 mqtt_port = "1883"
-mqtt_topic_prefix = "rpi-MQTT-monitor"
+mqtt_topic_prefix = "linux-MQTT-monitor"
 
 # Messages configuration
 
@@ -23,14 +23,9 @@ random_delay = randrange(1)
 
 # This is the time  between sending the individual messages
 sleep_time = 0.5
-cpu_load = True
-cpu_temp = True
-used_space = True
-voltage = True
-sys_clock_speed = True
-swap = True
-memory = True
+cpu_usage = True
+cpu_temp = False
+disk_usage = True
+swap_usage = True
+memory_usage = True
 uptime = True
-# Enable wifi_signal for unit of measuring % or wifi_signal_dbm for unit of meaning dBm
-wifi_signal = False
-wifi_signal_dbm = False
