@@ -88,12 +88,12 @@ update_config(){
   fi
   sed -i "s/1883/${PORT}/" src/config.py
 
-  printf "Enter mqtt_topic_prefix (default is linux-MQTT-monitor): "
+  printf "Enter mqtt_topic_prefix (default is linux-monitor): "
   read TOPIC
   if [ -z "$TOPIC" ]; then
-    TOPIC=linux-MQTT-monitor
+    TOPIC=linux-monitor
   fi
-  sed -i "s/linux-MQTT-monitor/${TOPIC}/" src/config.py
+  sed -i "s/linux-monitor/${TOPIC}/" src/config.py
 
   print_green  "+ config.py is updated with provided settings"
 }
