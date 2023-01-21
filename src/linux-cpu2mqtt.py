@@ -26,7 +26,7 @@ def check_disk_usage(path):
 
 
 def check_cpu_usage():
-    return psutil.cpu_percent(interval=0.0)
+    return psutil.cpu_percent(interval=1)
 
 def check_swap_usage():
     full_cmd = "free -t |grep -i swap | awk 'NR == 1 {print $3/$2*100}'"
