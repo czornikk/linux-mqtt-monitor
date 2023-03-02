@@ -29,7 +29,7 @@ def check_cpu_usage():
     return psutil.cpu_percent(interval=1)
 
 def check_swap_usage():
-    full_cmd = "free -t |grep -i swap | awk 'NR == 1 {print $3/$2*100}'"
+    full_cmd = "free -t |grep -i swap | awk 'NR == 1 { if( $2 != 0 ) {print $3/$2*100} else {print 0} }'"
     swap_usage = subprocess.Popen(full_cmd, shell=True, stdout=subprocess.PIPE).communicate()[0]
     swap_usage = round(float(swap_usage.decode("utf-8").replace(",", ".")), 1)
     return swap_usage
