@@ -147,42 +147,42 @@ def publish_to_mqtt(cpu_usage=0, cpu_temp=0, disk_usage=0, swap_usage=0, memory_
             client.publish("homeassistant/sensor/" + config.mqtt_topic_prefix + "/" + hostname + "_cpu_usage/config",
                            config_json('cpu_usage'), qos=0)
             time.sleep(config.sleep_time)
-        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/cpu_usage", cpu_usage, qos=1)
+        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/cpu_usage", cpu_usage, qos=1, retain=True)
         time.sleep(config.sleep_time)
     if config.cpu_temp:
         if config.discovery_messages:
             client.publish("homeassistant/sensor/" + config.mqtt_topic_prefix + "/" + hostname + "_cpu_temp/config",
                            config_json('cpu_temp'), qos=0)
             time.sleep(config.sleep_time)
-        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/cpu_temp", cpu_temp, qos=1)
+        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/cpu_temp", cpu_temp, qos=1, retain=True)
         time.sleep(config.sleep_time)
     if config.disk_usage:
         if config.discovery_messages:
             client.publish("homeassistant/sensor/" + config.mqtt_topic_prefix + "/" + hostname + "_disk_usage/config",
                            config_json('disk_usage'), qos=0)
             time.sleep(config.sleep_time)
-        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/disk_usage", disk_usage, qos=1)
+        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/disk_usage", disk_usage, qos=1, retain=True)
         time.sleep(config.sleep_time)
     if config.swap_usage:
         if config.discovery_messages:
             client.publish("homeassistant/sensor/" + config.mqtt_topic_prefix + "/" + hostname + "_swap_usage/config",
                            config_json('swap_usage'), qos=0)
             time.sleep(config.sleep_time)
-        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/swap_usage", swap_usage, qos=1)
+        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/swap_usage", swap_usage, qos=1, retain=True)
         time.sleep(config.sleep_time)
     if config.memory_usage:
         if config.discovery_messages:
             client.publish("homeassistant/sensor/" + config.mqtt_topic_prefix + "/" + hostname + "_memory_usage/config",
                            config_json('memory_usage'), qos=0)
             time.sleep(config.sleep_time)
-        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/memory_usage", memory_usage, qos=1)
+        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/memory_usage", memory_usage, qos=1, retain=True)
         time.sleep(config.sleep_time)
     if config.uptime:
         if config.discovery_messages:
             client.publish("homeassistant/sensor/" + config.mqtt_topic_prefix + "/" + hostname + "_uptime_days/config",
                            config_json('uptime_days'), qos=0)
             time.sleep(config.sleep_time)
-        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/uptime_days", uptime_days, qos=1)
+        client.publish(config.mqtt_topic_prefix + "/" + hostname + "/uptime_days", uptime_days, qos=1, retain=True)
         time.sleep(config.sleep_time)
 
     # disconnect from mqtt server
@@ -202,7 +202,7 @@ def bulk_publish_to_mqtt(cpu_usage=0, cpu_temp=0, disk_usage=0, swap_usage=0, me
     client.connect(config.mqtt_host, int(config.mqtt_port))
 
     # publish monitored values to MQTT
-    client.publish(config.mqtt_topic_prefix + "/" + hostname, values, qos=1)
+    client.publish(config.mqtt_topic_prefix + "/" + hostname, values, qos=1, retain=True)
 
     # disconnect from mqtt server
     client.disconnect()
